@@ -1,0 +1,29 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Club {
+  id          String    @id @default(cuid())
+  name        String
+  description String
+  category    String
+  members     Member[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Member {
+  id          String   @id @default(cuid())
+  name        String
+  email       String   @unique
+  phoneNumber String?
+  studentId   String?
+  clubs       Club[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}

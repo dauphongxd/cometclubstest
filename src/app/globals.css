@@ -1,0 +1,57 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #f3f4f6;
+  --foreground: #1f2937;
+  --card-background: #ffffff;
+  --card-border: #e5e7eb;
+  --hover-background: #f9fafb;
+  --muted-text: #6b7280;
+  --accent-1: #f97316;
+  --accent-2: #ea580c;
+}
+
+[data-theme='dark'] {
+  --background: #111827;
+  --foreground: #f9fafb;
+  --card-background: rgba(17, 24, 39, 0.8);
+  --card-border: #374151;
+  --hover-background: #1f2937;
+  --muted-text: #9ca3af;
+  --accent-1: #60a5fa;
+  --accent-2: #818cf8;
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #666;
+}
+
+/* Dark mode scrollbar */
+.dark ::-webkit-scrollbar-thumb {
+  background: #555;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #666;
+}
