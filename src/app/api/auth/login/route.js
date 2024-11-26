@@ -13,7 +13,7 @@ export async function POST(request) {
     });
 
     if (!user) {
-      return new Response(JSON.stringify({ error: 'Invalid credentials' }), {
+      return new Response(JSON.stringify({ error: 'User not found. Please check your email or register.' }), {
         status: 401,
         headers: { 'Content-Type': 'application/json' },
       });
@@ -23,7 +23,7 @@ export async function POST(request) {
     const isValidPassword = await bcrypt.compare(password, user.password);
 
     if (!isValidPassword) {
-      return new Response(JSON.stringify({ error: 'Invalid credentials' }), {
+      return new Response(JSON.stringify({ error: 'Incorrect password. Please try again.' }), {
         status: 401,
         headers: { 'Content-Type': 'application/json' },
       });

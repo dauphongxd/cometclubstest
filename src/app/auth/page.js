@@ -27,13 +27,15 @@ export default function AuthPage() {
         body: JSON.stringify(formData),
       });
       
+      const data = await response.json();
+      
       if (!response.ok) {
-        throw new Error('Authentication failed');
+        throw new Error(data.error || 'Authentication failed');
       }
 
       router.push('/clubs');
     } catch (error) {
-      setError('Authentication failed. Please try again.');
+      setError(error.message);
     }
   };
 
