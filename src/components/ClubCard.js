@@ -13,18 +13,45 @@ export default function ClubCard({ club, onJoinClick, isJoined, currentUser }) {
           {club.category}
         </span>
         <button
-          onClick={() => onJoinClick(club)}
-          className="bg-gradient-to-r from-[var(--accent-1)] to-[var(--accent-2)] text-white px-4 py-2 rounded-lg hover:opacity-90 transition-all duration-300 text-sm font-medium shadow-md hover:shadow-lg flex items-center gap-2 whitespace-nowrap"
+          onClick={() => {
+            if (!currentUser) {
+              const router = useRouter();
+              router.push('/auth');
+              return;
+            }
+            onJoinClick(club);
+          }}
+          className={`px-4 py-2 rounded-lg transition-all duration-300 text-sm font-medium shadow-md hover:shadow-lg flex items-center gap-2 whitespace-nowrap ${
+            isJoined 
+              ? 'bg-green-500 text-white hover:bg-green-600'
+              : 'bg-gradient-to-r from-[var(--accent-1)] to-[var(--accent-2)] text-white hover:opacity-90'
+          }`}
         >
-          Join Club
-          <svg 
-            className="w-4 h-4" 
-            fill="none" 
-            stroke="currentColor" 
-            viewBox="0 0 24 24"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-          </svg>
+          {isJoined ? (
+            <>
+              Joined
+              <svg 
+                className="w-4 h-4" 
+                fill="none" 
+                stroke="currentColor" 
+                viewBox="0 0 24 24"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+              </svg>
+            </>
+          ) : (
+            <>
+              Join Club
+              <svg 
+                className="w-4 h-4" 
+                fill="none" 
+                stroke="currentColor" 
+                viewBox="0 0 24 24"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </>
+          )}
         </button>
       </div>
     </div>
