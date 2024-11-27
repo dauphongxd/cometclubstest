@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import ClubCard from '@/components/ClubCard';
-import JoinClubModal from '@/components/JoinClubModal';
 import SchoolLogo from '@/components/SchoolLogo';
 
 export default function ClubsPage() {
