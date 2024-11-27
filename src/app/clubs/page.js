@@ -12,8 +12,23 @@ export default function ClubsPage() {
   const [joinedClubs, setJoinedClubs] = useState(new Set());
 
   useEffect(() => {
-    // In a real app, this would fetch from your API
-    setClubs([
+    const fetchClubs = async () => {
+      try {
+        const response = await fetch('/api/clubs');
+        if (response.ok) {
+          const data = await response.json();
+          setClubs(data);
+        }
+      } catch (error) {
+        console.error('Failed to fetch clubs:', error);
+      }
+    };
+
+    fetchClubs();
+  }, []);
+
+  // Example club data structure
+  const dummyClubs = [
       {
         id: '1',
         name: 'Computer Science Club',

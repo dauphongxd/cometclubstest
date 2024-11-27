@@ -4,7 +4,9 @@ import { useRouter } from 'next/navigation';
 export default function ClubCard({ club, onJoinClick, isJoined, currentUser }) {
   const router = useRouter();
   
-  const handleJoinClick = async () => {
+  const handleJoinClick = async (e) => {
+    e.stopPropagation(); // Prevent card click when clicking join button
+    
     if (!currentUser) {
       router.push('/auth');
       return;
@@ -26,11 +28,11 @@ export default function ClubCard({ club, onJoinClick, isJoined, currentUser }) {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error || `Failed to ${isJoined ? 'unjoin' : 'join'} club`);
+        throw new Error(data.error || `Failed to ${isJoined ? 'leave' : 'join'} club`);
       }
 
       if (onJoinClick) {
-        onJoinClick(club);
+        onJoinClick(club, !isJoined); // Pass the new joined state
       }
     } catch (error) {
       console.error(`Failed to ${isJoined ? 'unjoin' : 'join'} club:`, error);
