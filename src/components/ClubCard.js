@@ -2,6 +2,7 @@
 import { useRouter } from 'next/navigation';
 
 export default function ClubCard({ club, onJoinClick, isJoined, currentUser }) {
+  const router = useRouter();
   return (
     <div className="bg-[var(--card-background)] backdrop-blur-sm border border-[var(--card-border)] rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] flex flex-col h-full">
       <div className="flex-grow">
@@ -15,7 +16,6 @@ export default function ClubCard({ club, onJoinClick, isJoined, currentUser }) {
         <button
           onClick={() => {
             if (!currentUser) {
-              const router = useRouter();
               router.push('/auth');
               return;
             }
