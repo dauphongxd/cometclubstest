@@ -99,10 +99,10 @@ export default function ClubsPage() {
         id: '12',
         name: 'Investment Club',
         description: 'Learn about financial markets and investment strategies',
-        category: 'Business'
-      }
+        category: 'Business',
+      },
     ]);
-  }, []);
+  }, []); // End of useEffect
 
   // Get unique categories from clubs
   const categories = ['All', ...new Set(clubs.map(club => club.category))];
