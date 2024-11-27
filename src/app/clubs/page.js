@@ -239,6 +239,177 @@ export default function ClubsPage() {
     await fetchJoinedClubs(currentUser.id);
   };
 
+  useEffect(() => {
+    const fetchClubs = async () => {
+      try {
+        const response = await fetch('/api/clubs');
+        if (response.ok) {
+          const data = await response.json();
+          if (data.length === 0) {
+            // Use dummy data if no clubs exist in database
+            const dummyData = [
+              {
+                id: '1',
+                name: 'Computer Science Club',
+                description: 'For students interested in programming and technology',
+                category: 'Technology'
+              },
+              {
+                id: '2',
+                name: 'Photography Club',
+                description: 'Capture moments and learn photography techniques',
+                category: 'Arts'
+              },
+              {
+                id: '3',
+                name: 'Debate Club',
+                description: 'Develop public speaking and argumentation skills',
+                category: 'Academic'
+              },
+              {
+                id: '4',
+                name: 'Environmental Society',
+                description: 'Promote sustainability and environmental awareness on campus',
+                category: 'Environmental'
+              },
+              {
+                id: '5',
+                name: 'Chess Club',
+                description: 'Learn strategies and compete in chess tournaments',
+                category: 'Games'
+              },
+              {
+                id: '6',
+                name: 'Dance Ensemble',
+                description: 'Express yourself through various dance styles and performances',
+                category: 'Arts'
+              },
+              {
+                id: '7',
+                name: 'Robotics Club',
+                description: 'Build and program robots for competitions and projects',
+                category: 'Technology'
+              },
+              {
+                id: '8',
+                name: 'Creative Writing Society',
+                description: 'Share and develop your creative writing skills',
+                category: 'Arts'
+              },
+              {
+                id: '9',
+                name: 'Basketball Club',
+                description: 'Join our competitive basketball team and training sessions',
+                category: 'Sports'
+              },
+              {
+                id: '10',
+                name: 'Science Society',
+                description: 'Explore scientific discoveries and conduct experiments',
+                category: 'Academic'
+              },
+              {
+                id: '11',
+                name: 'Music Band',
+                description: 'Create music and perform at campus events',
+                category: 'Arts'
+              },
+              {
+                id: '12',
+                name: 'Investment Club',
+                description: 'Learn about financial markets and investment strategies',
+                category: 'Business'
+              }
+            ];
+            setClubs(dummyData);
+          } else {
+            setClubs(data);
+          }
+        }
+      } catch (error) {
+        console.error('Failed to fetch clubs:', error);
+        // Fallback to dummy data on error
+        const dummyData = [
+          {
+            id: '1',
+            name: 'Computer Science Club',
+            description: 'For students interested in programming and technology',
+            category: 'Technology'
+          },
+          {
+            id: '2',
+            name: 'Photography Club',
+            description: 'Capture moments and learn photography techniques',
+            category: 'Arts'
+          },
+          {
+            id: '3',
+            name: 'Debate Club',
+            description: 'Develop public speaking and argumentation skills',
+            category: 'Academic'
+          },
+          {
+            id: '4',
+            name: 'Environmental Society',
+            description: 'Promote sustainability and environmental awareness on campus',
+            category: 'Environmental'
+          },
+          {
+            id: '5',
+            name: 'Chess Club',
+            description: 'Learn strategies and compete in chess tournaments',
+            category: 'Games'
+          },
+          {
+            id: '6',
+            name: 'Dance Ensemble',
+            description: 'Express yourself through various dance styles and performances',
+            category: 'Arts'
+          },
+          {
+            id: '7',
+            name: 'Robotics Club',
+            description: 'Build and program robots for competitions and projects',
+            category: 'Technology'
+          },
+          {
+            id: '8',
+            name: 'Creative Writing Society',
+            description: 'Share and develop your creative writing skills',
+            category: 'Arts'
+          },
+          {
+            id: '9',
+            name: 'Basketball Club',
+            description: 'Join our competitive basketball team and training sessions',
+            category: 'Sports'
+          },
+          {
+            id: '10',
+            name: 'Science Society',
+            description: 'Explore scientific discoveries and conduct experiments',
+            category: 'Academic'
+          },
+          {
+            id: '11',
+            name: 'Music Band',
+            description: 'Create music and perform at campus events',
+            category: 'Arts'
+          },
+          {
+            id: '12',
+            name: 'Investment Club',
+            description: 'Learn about financial markets and investment strategies',
+            category: 'Business'
+          }
+        ];
+        setClubs(dummyData);
+      }
+    };
+
+    fetchClubs();
+  }, []);
+
   const filteredClubs = clubs.filter(club => {
     const matchesSearch = 
       club.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
