@@ -144,8 +144,6 @@ export default function ClubsPage() {
       router.push('/auth');
       return;
     }
-    setSelectedClub(club);
-    setShowModal(true);
     await fetchJoinedClubs(currentUser.id);
   };
 
