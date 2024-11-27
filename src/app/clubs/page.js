@@ -16,16 +16,13 @@ export default function ClubsPage() {
   useEffect(() => {
     const fetchClubs = async () => {
       try {
-        // For now, use dummy data directly instead of fetching
-        const data = [
-          // Use dummy data if no clubs exist in database
-          const dummyData = [{
-        id: '1',
-        name: 'Computer Science Club',
-        description: 'For students interested in programming and technology',
-        category: 'Technology'
-      },
-      {
+        const data = [{
+          id: '1',
+          name: 'Computer Science Club',
+          description: 'For students interested in programming and technology',
+          category: 'Technology'
+        },
+        {
         id: '2',
         name: 'Photography Club',
         description: 'Capture moments and learn photography techniques',
@@ -91,10 +88,7 @@ export default function ClubsPage() {
         description: 'Learn about financial markets and investment strategies',
         category: 'Business'
       }
-    ];
-            setClubs(dummyData);
-          } else {
-        ];
+        }];
         setClubs(data);
       } catch (error) {
         console.error('Failed to fetch clubs:', error);
