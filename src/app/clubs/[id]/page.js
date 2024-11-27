@@ -2,17 +2,19 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { use } from 'react';
 
 export default function ClubDetailsPage({ params }) {
   const [club, setClub] = useState(null);
   const [announcements, setAnnouncements] = useState([]);
   const [activities, setActivities] = useState([]);
   const router = useRouter();
+  const clubId = use(params).id;
 
   useEffect(() => {
     const fetchClubDetails = async () => {
       try {
-        const response = await fetch(`/api/clubs/${params.id}`);
+        const response = await fetch(`/api/clubs/${clubId}`);
         if (response.ok) {
           const data = await response.json();
           setClub(data);
@@ -31,10 +33,10 @@ export default function ClubDetailsPage({ params }) {
       }
     };
 
-    if (params.id) {
+    if (clubId) {
       fetchClubDetails();
     }
-  }, [params.id]);
+  }, [clubId]);
 
   if (!club) return null;
 
