@@ -29,10 +29,13 @@ export async function POST(request) {
       });
     }
 
+    // Generate a simple token (in a real app, use proper JWT)
+    const token = Buffer.from(`${user.id}-${Date.now()}`).toString('base64');
+
     // Remove password from response
     const { password: _, ...userWithoutPassword } = user;
 
-    return new Response(JSON.stringify(userWithoutPassword), {
+    return new Response(JSON.stringify({ user: userWithoutPassword, token }), {
       status: 200,
       headers: { 'Content-Type': 'application/json' },
     });

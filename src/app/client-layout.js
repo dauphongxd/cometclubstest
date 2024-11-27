@@ -13,15 +13,29 @@ export default function ClientLayout({ children }) {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const response = await fetch('/api/auth/me');
+        const token = localStorage.getItem('authToken');
+        if (!token) {
+          setUser(null);
+          return;
+        }
+        
+        const response = await fetch('/api/auth/me', {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+        
         if (response.ok) {
           const userData = await response.json();
           setUser(userData);
         } else {
+          localStorage.removeItem('authToken');
           setUser(null);
         }
       } catch (error) {
         console.error('Auth check failed:', error);
+        localStorage.removeItem('authToken');
+        setUser(null);
       } finally {
         setLoading(false);
       }

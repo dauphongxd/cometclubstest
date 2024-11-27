@@ -3,6 +3,34 @@ import { useRouter } from 'next/navigation';
 
 export default function ClubCard({ club, onJoinClick, isJoined, currentUser }) {
   const router = useRouter();
+  const handleJoinClick = async () => {
+    if (!currentUser) {
+      router.push('/auth');
+      return;
+    }
+
+    try {
+      const response = await fetch('/api/join-club', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+        },
+        body: JSON.stringify({
+          clubId: club.id,
+          userId: currentUser.id
+        })
+      });
+
+      if (response.ok) {
+        // Refresh the page or update the UI
+        window.location.reload();
+      }
+    } catch (error) {
+      console.error('Failed to join club:', error);
+    }
+  };
+
   return (
     <div className="bg-[var(--card-background)] backdrop-blur-sm border border-[var(--card-border)] rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] flex flex-col h-full">
       <div className="flex-grow">
@@ -14,13 +42,7 @@ export default function ClubCard({ club, onJoinClick, isJoined, currentUser }) {
           {club.category}
         </span>
         <button
-          onClick={() => {
-            if (!currentUser) {
-              router.push('/auth');
-              return;
-            }
-            onJoinClick(club);
-          }}
+          onClick={handleJoinClick}
           className={`px-4 py-2 rounded-lg transition-all duration-300 text-sm font-medium shadow-md hover:shadow-lg flex items-center gap-2 whitespace-nowrap ${
             isJoined 
               ? 'bg-green-500 text-white hover:bg-green-600'

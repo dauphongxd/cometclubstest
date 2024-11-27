@@ -41,7 +41,9 @@ export default function AuthPage() {
         throw new Error(data.error || 'Authentication failed');
       }
 
-      router.push('/');
+      const data = await response.json();
+      localStorage.setItem('authToken', data.token);
+      window.location.href = '/';
     } catch (error) {
       setError(error.message);
     }

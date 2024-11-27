@@ -13,9 +13,7 @@ export default function UserMenu({ user }) {
         method: 'POST',
       });
       if (response.ok) {
-        // Clear user state from localStorage if you're using it
-        localStorage.removeItem('user');
-        // Force a full page refresh to clear all state
+        localStorage.removeItem('authToken');
         window.location.href = '/';
       }
     } catch (error) {
