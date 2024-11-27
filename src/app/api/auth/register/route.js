@@ -31,10 +31,13 @@ export async function POST(request) {
       },
     });
 
+    // Generate token (similar to login)
+    const token = Buffer.from(`${user.id}-${Date.now()}`).toString('base64');
+
     // Remove password from response
     const { password: _, ...userWithoutPassword } = user;
 
-    return new Response(JSON.stringify(userWithoutPassword), {
+    return new Response(JSON.stringify({ user: userWithoutPassword, token }), {
       status: 201,
       headers: { 'Content-Type': 'application/json' },
     });
