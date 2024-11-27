@@ -42,7 +42,7 @@ export default function AuthPage() {
       }
       localStorage.setItem('authToken', responseData.token);
       const returnUrl = searchParams.get('returnUrl') || '/';
-      router.push(returnUrl);
+      router.push('/dashboard');
     } catch (error) {
       setError(error.message);
     }
