@@ -7,8 +7,6 @@ import SchoolLogo from '@/components/SchoolLogo';
 export default function ClubsPage() {
   const [clubs, setClubs] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedClub, setSelectedClub] = useState(null);
-  const [showModal, setShowModal] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [showJoinedOnly, setShowJoinedOnly] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
@@ -235,12 +233,6 @@ export default function ClubsPage() {
           ))}
         </div>
 
-        {showModal && (
-          <JoinClubModal
-            club={selectedClub}
-            onClose={() => setShowModal(false)}
-          />
-        )}
       </div>
     </div>
   );
