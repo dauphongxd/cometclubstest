@@ -57,11 +57,12 @@ export default function DashboardPage() {
           setJoinedClubs([]);
         }
       } else {
-        console.error('Failed to fetch joined clubs:', await response.text());
+        const errorText = await response.text();
+        console.error('Failed to fetch joined clubs:', errorText);
         setJoinedClubs([]);
       }
     } catch (error) {
-      console.error('Failed to fetch joined clubs:', error);
+      console.error('Failed to fetch joined clubs:', error.message || error);
     }
   };
 
