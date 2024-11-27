@@ -40,10 +40,11 @@ export async function GET(request) {
     });
   } catch (error) {
     console.error('Error in /api/clubs/joined:', error);
-    return new Response(JSON.stringify({ 
+    const errorResponse = {
       error: 'Failed to fetch joined clubs',
-      details: error.message 
-    }), {
+      details: error.message || String(error)
+    };
+    return new Response(JSON.stringify(errorResponse), {
       status: 500,
       headers: { 'Content-Type': 'application/json' },
     });

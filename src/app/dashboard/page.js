@@ -48,21 +48,26 @@ export default function DashboardPage() {
           'Cache-Control': 'no-cache'
         }
       });
+
+      let responseText;
+      try {
+        responseText = await response.text();
+        const data = JSON.parse(responseText);
       if (response.ok) {
-        const clubs = await response.json();
-        if (Array.isArray(clubs)) {
-          setJoinedClubs(clubs);
+        const data = JSON.parse(responseText);
+        if (Array.isArray(data)) {
+          setJoinedClubs(data);
         } else {
-          console.error('Received invalid clubs data:', clubs);
+          console.error('Received invalid clubs data:', data);
           setJoinedClubs([]);
         }
       } else {
-        const errorData = await response.json();
+        const errorData = JSON.parse(responseText);
         console.error('Failed to fetch joined clubs:', errorData.error, errorData.details || '');
         setJoinedClubs([]);
       }
     } catch (error) {
-      console.error('Failed to fetch joined clubs:', error.message || error);
+      console.error('Failed to fetch joined clubs:', error.message || error, '\nResponse:', responseText);
     }
   };
 
