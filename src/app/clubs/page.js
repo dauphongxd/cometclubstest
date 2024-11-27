@@ -25,8 +25,7 @@ export default function ClubsPage() {
         const data = await response.json();
         if (data.length === 0) {
           // Use dummy data if no clubs exist in database
-          const dummyData = [
-      {
+          const dummyData = [{
         id: '1',
         name: 'Computer Science Club',
         description: 'For students interested in programming and technology',
@@ -103,7 +102,6 @@ export default function ClubsPage() {
           } else {
             setClubs(data);
           }
-        }
       } catch (error) {
         console.error('Failed to fetch clubs:', error);
         // Fallback to dummy data on error
