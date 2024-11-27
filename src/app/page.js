@@ -31,6 +31,13 @@ export default function Home() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
             </svg>
           </Link>
+          
+          <Link
+            href="/clubs"
+            className="px-8 py-4 border border-[var(--card-border)] bg-[var(--card-background)] rounded-lg hover:bg-[var(--hover-background)] transition-all duration-300 text-lg font-medium shadow-md hover:shadow-lg"
+          >
+            Browse Clubs
+          </Link>
         </div>
 
         <div className="mt-16 grid grid-cols-1 sm:grid-cols-3 gap-8 text-left">
