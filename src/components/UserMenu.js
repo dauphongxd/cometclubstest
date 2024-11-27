@@ -13,7 +13,10 @@ export default function UserMenu({ user }) {
         method: 'POST',
       });
       if (response.ok) {
-        window.location.href = '/auth';  // Force a full page refresh
+        // Clear user state from localStorage if you're using it
+        localStorage.removeItem('user');
+        // Force a full page refresh to clear all state
+        window.location.href = '/';
       }
     } catch (error) {
       console.error('Logout failed:', error);

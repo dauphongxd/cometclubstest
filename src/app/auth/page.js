@@ -1,10 +1,18 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/navigation';
 
 export default function AuthPage() {
   const [isLogin, setIsLogin] = useState(true);
+  const searchParams = useSearchParams();
+  
+  useEffect(() => {
+    if (searchParams.get('register') === 'true') {
+      setIsLogin(false);
+    }
+  }, [searchParams]);
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -33,7 +41,7 @@ export default function AuthPage() {
         throw new Error(data.error || 'Authentication failed');
       }
 
-      router.push('/clubs');
+      router.push('/');
     } catch (error) {
       setError(error.message);
     }
