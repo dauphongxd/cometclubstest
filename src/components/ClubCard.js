@@ -3,6 +3,7 @@ import { useRouter } from 'next/navigation';
 
 export default function ClubCard({ club, onJoinClick, isJoined, currentUser }) {
   const router = useRouter();
+  
   const handleJoinClick = async () => {
     if (!currentUser) {
       router.push('/auth');
@@ -14,7 +15,6 @@ export default function ClubCard({ club, onJoinClick, isJoined, currentUser }) {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('authToken')}`
         },
         body: JSON.stringify({
           clubId: club.id,
@@ -28,16 +28,12 @@ export default function ClubCard({ club, onJoinClick, isJoined, currentUser }) {
         throw new Error(data.error || 'Failed to join club');
       }
 
-      // Call the onJoinClick callback to update parent state
       if (onJoinClick) {
         onJoinClick(club);
       }
     } catch (error) {
       console.error('Failed to join club:', error);
-      const errorMessage = error.message === 'Failed to join club' ? 
-        await error.response.json().then(data => data.error) : 
-        error.message;
-      alert(errorMessage || 'Failed to join club. Please try again.');
+      alert(error.message || 'Failed to join club. Please try again.');
     }
   };
 

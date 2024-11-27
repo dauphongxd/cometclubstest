@@ -19,9 +19,13 @@ describe('ClubCard', () => {
     expect(screen.getByText('Test Category')).toBeInTheDocument()
   })
 
-  it('calls onJoinClick when join button is clicked', () => {
-    const joinButton = screen.getByText('Join Club')
-    fireEvent.click(joinButton)
-    expect(mockOnJoinClick).toHaveBeenCalledWith(mockClub)
+  it('redirects to auth page when not logged in', () => {
+    const mockRouter = { push: jest.fn() };
+    jest.spyOn(require('next/navigation'), 'useRouter').mockReturnValue(mockRouter);
+    
+    const joinButton = screen.getByText('Join Club');
+    fireEvent.click(joinButton);
+    
+    expect(mockRouter.push).toHaveBeenCalledWith('/auth');
   })
 })

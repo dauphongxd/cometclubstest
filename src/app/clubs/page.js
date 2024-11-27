@@ -97,17 +97,33 @@ export default function ClubsPage() {
   const categories = ['All', ...new Set(clubs.map(club => club.category))];
 
   useEffect(() => {
-    // Fetch current user and their joined clubs
     const fetchUserData = async () => {
       try {
-        const response = await fetch('/api/auth/me');
+        const token = localStorage.getItem('authToken');
+        if (!token) {
+          setCurrentUser(null);
+          setJoinedClubs(new Set());
+          return;
+        }
+
+        const response = await fetch('/api/auth/me', {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+        
         if (response.ok) {
           const userData = await response.json();
           setCurrentUser(userData);
           await fetchJoinedClubs(userData.id);
+        } else {
+          setCurrentUser(null);
+          setJoinedClubs(new Set());
         }
       } catch (error) {
         console.error('Error fetching user data:', error);
+        setCurrentUser(null);
+        setJoinedClubs(new Set());
       }
     };
     
