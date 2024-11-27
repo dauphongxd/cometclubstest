@@ -14,8 +14,12 @@ export async function GET(request) {
 
     const members = await prisma.member.findMany({
       where: { userId },
-      select: { clubId: true }
+      include: {
+        club: true
+      }
     });
+
+    const clubs = members.map(member => member.club);
 
     return new Response(JSON.stringify(members), {
       status: 200,

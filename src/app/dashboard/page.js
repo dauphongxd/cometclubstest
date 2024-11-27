@@ -44,20 +44,8 @@ export default function DashboardPage() {
     try {
       const response = await fetch(`/api/clubs/joined?userId=${userId}`);
       if (response.ok) {
-        const memberships = await response.json();
-        
-        // Fetch full club details for each membership
-        const clubDetailsPromises = memberships.map(async (membership) => {
-          const clubResponse = await fetch(`/api/clubs/${membership.clubId}`);
-          if (clubResponse.ok) {
-            return clubResponse.json();
-          }
-          return null;
-        });
-
-        const clubDetails = await Promise.all(clubDetailsPromises);
-        const validClubs = clubDetails.filter(club => club !== null);
-        setJoinedClubs(validClubs);
+        const clubs = await response.json();
+        setJoinedClubs(clubs);
       }
     } catch (error) {
       console.error('Failed to fetch joined clubs:', error);
