@@ -150,11 +150,6 @@ export default function ClubsPage() {
     return matchesSearch && matchesCategory && matchesJoinedFilter;
   });
 
-  const handleJoinClick = (club) => {
-    setSelectedClub(club);
-    setShowModal(true);
-  };
-
   return (
     <div className="min-h-screen p-8">
       <div className="max-w-6xl mx-auto">
