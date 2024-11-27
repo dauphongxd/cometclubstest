@@ -40,9 +40,10 @@ export async function GET(request) {
       });
     }
 
-    const clubs = members.map(member => member.club);
+    // Ensure we have valid clubs data to return
+    const clubs = members.map(member => member.club).filter(Boolean);
 
-    return new Response(JSON.stringify(clubs || []), {
+    return new Response(JSON.stringify(clubs), {
       status: 200,
       headers: { 'Content-Type': 'application/json' },
     });
