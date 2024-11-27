@@ -42,10 +42,12 @@ export default function DashboardPage() {
 
   const fetchJoinedClubs = async (userId) => {
     try {
+      const token = localStorage.getItem('authToken');
       const response = await fetch(`/api/clubs/joined?userId=${userId}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
           'Cache-Control': 'no-cache'
         }
       });
@@ -66,6 +68,8 @@ export default function DashboardPage() {
       let data;
       try {
         const responseText = await response.text();
+        console.log('Raw response:', responseText); // Add this line for debugging
+        
         if (!responseText.trim()) {
           console.error('Empty response received from server');
           setJoinedClubs([]);
@@ -73,6 +77,7 @@ export default function DashboardPage() {
         }
         
         data = JSON.parse(responseText);
+        console.log('Parsed data:', data); // Add this line for debugging
       } catch (error) {
         console.error('Failed to parse response:', error.message);
         setJoinedClubs([]);

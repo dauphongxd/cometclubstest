@@ -41,10 +41,16 @@ export async function GET(request) {
         members: {
           where: {
             userId: userId
+          },
+          select: {
+            joinedAt: true
           }
         }
       }
     });
+
+    // Log the clubs data for debugging
+    console.log('Found clubs:', JSON.stringify(clubs, null, 2));
 
     if (!clubs || clubs.length === 0) {
       return new Response(JSON.stringify([]), {
