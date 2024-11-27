@@ -127,9 +127,13 @@ export default function ClubsPage() {
   };
 
   const handleJoinClick = async (club) => {
-    if (currentUser) {
-      await fetchJoinedClubs(currentUser.id);
+    if (!currentUser) {
+      router.push('/auth');
+      return;
     }
+    setSelectedClub(club);
+    setShowModal(true);
+    await fetchJoinedClubs(currentUser.id);
   };
 
   const filteredClubs = clubs.filter(club => {
