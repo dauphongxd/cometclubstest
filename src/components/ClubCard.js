@@ -11,7 +11,8 @@ export default function ClubCard({ club, onJoinClick, isJoined, currentUser }) {
     }
 
     try {
-      const response = await fetch('/api/join-club', {
+      const endpoint = isJoined ? '/api/unjoin-club' : '/api/join-club';
+      const response = await fetch(endpoint, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -25,19 +26,15 @@ export default function ClubCard({ club, onJoinClick, isJoined, currentUser }) {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error || 'Failed to join club');
+        throw new Error(data.error || `Failed to ${isJoined ? 'unjoin' : 'join'} club`);
       }
 
       if (onJoinClick) {
         onJoinClick(club);
       }
     } catch (error) {
-      console.error('Failed to join club:', error);
-      if (error.message === 'Already joined this club') {
-        alert('You have already joined this club.');
-      } else {
-        alert(error.message || 'Failed to join club. Please try again.');
-      }
+      console.error(`Failed to ${isJoined ? 'unjoin' : 'join'} club:`, error);
+      alert(error.message || `Failed to ${isJoined ? 'unjoin' : 'join'} club. Please try again.`);
     }
   };
 
@@ -61,14 +58,14 @@ export default function ClubCard({ club, onJoinClick, isJoined, currentUser }) {
         >
           {isJoined ? (
             <>
-              Joined
+              Leave Club
               <svg 
                 className="w-4 h-4" 
                 fill="none" 
                 stroke="currentColor" 
                 viewBox="0 0 24 24"
               >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 16l4-4m0 0l-4-4m4 4H7" />
               </svg>
             </>
           ) : (
