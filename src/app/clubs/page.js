@@ -295,12 +295,10 @@ export default function ClubsPage() {
     }
   };
 
-  const handleJoinClick = async (club) => {
-    if (!currentUser) {
-      router.push('/auth');
-      return;
+  const handleJoinClick = async () => {
+    if (currentUser) {
+      await fetchJoinedClubs(currentUser.id);
     }
-    await fetchJoinedClubs(currentUser.id);
   };
 
 

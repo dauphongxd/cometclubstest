@@ -28,13 +28,13 @@ export default function ClubCard({ club, onJoinClick, isJoined, currentUser }) {
       const data = await response.json();
 
       // Handle "Already joined" as a normal case, not an error
-      if (data.error === 'Already joined this club') {
-        alert('You have already joined this club!');
-        return;
-      }
-
       if (!response.ok) {
         throw new Error(data.error || `Failed to ${isJoined ? 'leave' : 'join'} club`);
+      }
+
+      // Call onJoinClick after successful join/leave
+      if (onJoinClick) {
+        onJoinClick();
       }
 
       if (onJoinClick) {

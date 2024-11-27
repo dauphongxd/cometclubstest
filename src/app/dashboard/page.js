@@ -45,7 +45,8 @@ export default function DashboardPage() {
       const response = await fetch(`/api/clubs/joined?userId=${userId}`, {
         headers: {
           'Content-Type': 'application/json',
-          'Cache-Control': 'no-cache'
+          'Cache-Control': 'no-cache',
+          'Authorization': `Bearer ${localStorage.getItem('authToken')}`
         }
       });
 
