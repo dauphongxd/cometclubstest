@@ -27,6 +27,12 @@ export default function ClubCard({ club, onJoinClick, isJoined, currentUser }) {
 
       const data = await response.json();
 
+      // Handle "Already joined" as a normal case, not an error
+      if (data.error === 'Already joined this club') {
+        alert('You have already joined this club!');
+        return;
+      }
+
       if (!response.ok) {
         throw new Error(data.error || `Failed to ${isJoined ? 'leave' : 'join'} club`);
       }
@@ -35,8 +41,10 @@ export default function ClubCard({ club, onJoinClick, isJoined, currentUser }) {
         onJoinClick(club, !isJoined); // Pass the new joined state
       }
     } catch (error) {
-      console.error(`Failed to ${isJoined ? 'unjoin' : 'join'} club:`, error);
-      alert(error.message || `Failed to ${isJoined ? 'unjoin' : 'join'} club. Please try again.`);
+      if (error.message !== 'Already joined this club') {
+        console.error(`Failed to ${isJoined ? 'unjoin' : 'join'} club:`, error);
+        alert(error.message || `Failed to ${isJoined ? 'unjoin' : 'join'} club. Please try again.`);
+      }
     }
   };
 

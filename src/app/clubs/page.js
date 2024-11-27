@@ -255,7 +255,7 @@ export default function ClubsPage() {
     const matchesCategory = 
       selectedCategory === 'All' || club.category === selectedCategory;
     
-    const matchesJoinedFilter = !joinedClubs.has(club.id);
+    const matchesJoinedFilter = true; // Remove the joined clubs filter from this page
     
     return matchesSearch && matchesCategory && matchesJoinedFilter;
   });
