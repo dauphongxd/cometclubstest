@@ -16,17 +16,8 @@ export default function ClubsPage() {
   useEffect(() => {
     const fetchClubs = async () => {
       try {
-        const response = await fetch(`${window.location.origin}/api/clubs`, {
-          cache: 'no-store',
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        });
-        if (!response.ok) {
-          throw new Error('Failed to fetch clubs');
-        }
-        const data = await response.json();
-        if (data.length === 0) {
+        // For now, use dummy data directly instead of fetching
+        const data = [
           // Use dummy data if no clubs exist in database
           const dummyData = [{
         id: '1',
@@ -103,8 +94,8 @@ export default function ClubsPage() {
     ];
             setClubs(dummyData);
           } else {
-            setClubs(data);
-          }
+        ];
+        setClubs(data);
       } catch (error) {
         console.error('Failed to fetch clubs:', error);
         // Fallback to dummy data on error
