@@ -180,6 +180,42 @@ export default function ClubsPage() {
             name: 'Investment Club',
             description: 'Learn about financial markets and investment strategies',
             category: 'Business'
+          },
+          {
+            id: '13',
+            name: 'Soccer Club',
+            description: 'Join our soccer team for training and competitions',
+            category: 'Sports'
+          },
+          {
+            id: '14',
+            name: 'Art Studio',
+            description: 'Express yourself through various art mediums and techniques',
+            category: 'Arts'
+          },
+          {
+            id: '15',
+            name: 'Book Club',
+            description: 'Discuss and explore literature together',
+            category: 'Academic'
+          },
+          {
+            id: '16',
+            name: 'Coding Competition Team',
+            description: 'Participate in coding competitions and hackathons',
+            category: 'Technology'
+          },
+          {
+            id: '17',
+            name: 'Volleyball Club',
+            description: 'Practice volleyball and compete with other teams',
+            category: 'Sports'
+          },
+          {
+            id: '18',
+            name: 'Film Society',
+            description: 'Watch and discuss films, learn about cinematography',
+            category: 'Arts'
           }
         ];
         setClubs(dummyData);
@@ -255,7 +291,7 @@ export default function ClubsPage() {
     const matchesCategory = 
       selectedCategory === 'All' || club.category === selectedCategory;
     
-    const matchesJoinedFilter = true; // Remove the joined clubs filter from this page
+    const matchesJoinedFilter = !joinedClubs.has(club.id); // Filter out joined clubs
     
     return matchesSearch && matchesCategory && matchesJoinedFilter;
   });
