@@ -18,11 +18,13 @@ export default function ClubCard({ club, onJoinClick, isJoined, currentUser }) {
     }
 
     try {
+      const token = localStorage.getItem('authToken');
       const endpoint = isJoined ? '/api/unjoin-club' : '/api/join-club';
       const response = await fetch(endpoint, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify({
           clubId: club.id,

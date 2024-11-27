@@ -37,13 +37,21 @@ export async function GET(request) {
         members: {
           where: {
             userId: userId
-          },
-          select: {
-            joinedAt: true
           }
         }
       }
     });
+
+    // Log the query results for debugging
+    console.log('Found clubs for user:', userId, JSON.stringify(clubs, null, 2));
+
+    if (!clubs) {
+      console.log('No clubs found for user:', userId);
+      return new Response(JSON.stringify([]), {
+        status: 200,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
 
     // Transform the data to include all necessary fields
     const formattedClubs = clubs.map(club => ({

@@ -48,11 +48,15 @@ export async function POST(request) {
         userId,
         clubId,
       },
+      include: {
+        club: true
+      }
     });
 
     return new Response(JSON.stringify({ 
       message: 'Successfully joined',
-      member 
+      member,
+      club: member.club
     }), {
       status: 200,
       headers: { 'Content-Type': 'application/json' },

@@ -285,10 +285,19 @@ export default function ClubsPage() {
 
   const fetchJoinedClubs = async (userId) => {
     try {
-      const joinedResponse = await fetch(`/api/clubs/joined?userId=${userId}`);
+      const token = localStorage.getItem('authToken');
+      const joinedResponse = await fetch(`/api/clubs/joined?userId=${userId}`, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Cache-Control': 'no-cache'
+        }
+      });
       if (joinedResponse.ok) {
         const joinedData = await joinedResponse.json();
+        console.log('Joined clubs data:', joinedData); // Debug log
         setJoinedClubs(new Set(joinedData.map(club => club.id)));
+      } else {
+        console.error('Failed to fetch joined clubs:', await joinedResponse.text());
       }
     } catch (error) {
       console.error('Error fetching joined clubs:', error);
