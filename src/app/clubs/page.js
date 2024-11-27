@@ -288,7 +288,7 @@ export default function ClubsPage() {
       const joinedResponse = await fetch(`/api/clubs/joined?userId=${userId}`);
       if (joinedResponse.ok) {
         const joinedData = await joinedResponse.json();
-        setJoinedClubs(new Set(joinedData.map(club => club.clubId)));
+        setJoinedClubs(new Set(joinedData.map(club => club.id)));
       }
     } catch (error) {
       console.error('Error fetching joined clubs:', error);

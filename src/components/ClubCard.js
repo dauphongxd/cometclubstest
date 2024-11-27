@@ -12,6 +12,11 @@ export default function ClubCard({ club, onJoinClick, isJoined, currentUser }) {
       return;
     }
 
+    if (!club || !club.id) {
+      console.error('Invalid club data:', club);
+      return;
+    }
+
     try {
       const endpoint = isJoined ? '/api/unjoin-club' : '/api/join-club';
       const response = await fetch(endpoint, {

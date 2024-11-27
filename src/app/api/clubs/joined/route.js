@@ -24,7 +24,7 @@ export async function GET(request) {
       });
     }
 
-    // Get all clubs this user is a member of
+    // Get all clubs this user is a member of with full club details
     const clubs = await prisma.club.findMany({
       where: {
         members: {
@@ -32,10 +32,21 @@ export async function GET(request) {
             userId: userId
           }
         }
+      },
+      select: {
+        id: true,
+        name: true,
+        description: true,
+        category: true,
+        members: {
+          where: {
+            userId: userId
+          }
+        }
       }
     });
 
-    if (!clubs) {
+    if (!clubs || clubs.length === 0) {
       return new Response(JSON.stringify([]), {
         status: 200,
         headers: { 'Content-Type': 'application/json' },

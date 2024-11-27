@@ -51,14 +51,14 @@ export default function DashboardPage() {
       });
 
       if (!response.ok) {
-        const errorText = await response.text();
-        let errorData;
-        try {
-          errorData = JSON.parse(errorText);
-          console.error('Failed to fetch joined clubs:', errorData.error || 'Unknown error');
-        } catch (e) {
-          console.error('Failed to fetch joined clubs:', errorText || 'No response received');
-        }
+        console.error('Failed to fetch joined clubs:', response.status, response.statusText);
+        setJoinedClubs([]);
+        return;
+      }
+
+      const contentType = response.headers.get('content-type');
+      if (!contentType || !contentType.includes('application/json')) {
+        console.error('Invalid content type:', contentType);
         setJoinedClubs([]);
         return;
       }
