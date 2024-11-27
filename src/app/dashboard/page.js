@@ -42,7 +42,7 @@ export default function DashboardPage() {
 
   const fetchJoinedClubs = async (userId) => {
     try {
-      const response = await fetch(`${window.location.origin}/api/clubs/joined?userId=${userId}`, {
+      const response = await fetch(`/api/clubs/joined?userId=${userId}`, {
         headers: {
           'Content-Type': 'application/json',
           'Cache-Control': 'no-cache'
@@ -51,11 +51,14 @@ export default function DashboardPage() {
       if (response.ok) {
         const clubs = await response.json();
         if (Array.isArray(clubs)) {
-          setJoinedClubs(clubs.map(club => ({...club, isJoined: true})));
+          setJoinedClubs(clubs);
         } else {
           console.error('Received invalid clubs data:', clubs);
           setJoinedClubs([]);
         }
+      } else {
+        console.error('Failed to fetch joined clubs:', await response.text());
+        setJoinedClubs([]);
       }
     } catch (error) {
       console.error('Failed to fetch joined clubs:', error);
