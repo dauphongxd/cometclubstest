@@ -16,8 +16,11 @@ export default function ClubsPage() {
   useEffect(() => {
     const fetchClubs = async () => {
       try {
-        const response = await fetch('/api/clubs', {
-          cache: 'no-store'
+        const response = await fetch(`${window.location.origin}/api/clubs`, {
+          cache: 'no-store',
+          headers: {
+            'Content-Type': 'application/json'
+          }
         });
         if (!response.ok) {
           throw new Error('Failed to fetch clubs');

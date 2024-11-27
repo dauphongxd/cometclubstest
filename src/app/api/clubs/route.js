@@ -6,7 +6,7 @@ export async function GET() {
       include: {
         members: true,
       },
-    });
+    }) || [];
 
     return new Response(JSON.stringify(clubs), {
       status: 200,
