@@ -32,9 +32,17 @@ export async function GET(request) {
     });
 
     // Return empty array if no memberships found
-    const clubs = members?.map(member => member.club) || [];
+    // Ensure we have valid data to return
+    if (!members || !Array.isArray(members)) {
+      return new Response(JSON.stringify({ error: 'No membership data found' }), {
+        status: 404,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
 
-    return new Response(JSON.stringify(clubs), {
+    const clubs = members.map(member => member.club);
+
+    return new Response(JSON.stringify(clubs || []), {
       status: 200,
       headers: { 'Content-Type': 'application/json' },
     });

@@ -49,24 +49,36 @@ export default function DashboardPage() {
         }
       });
 
-      let responseText;
+      if (!response.ok) {
+        const errorText = await response.text();
+        let errorData;
+        try {
+          errorData = JSON.parse(errorText);
+          console.error('Failed to fetch joined clubs:', errorData.error || 'Unknown error');
+        } catch (e) {
+          console.error('Failed to fetch joined clubs:', errorText || 'No response received');
+        }
+        setJoinedClubs([]);
+        return;
+      }
+
+      const responseText = await response.text();
+      if (!responseText) {
+        console.error('Empty response received from server');
+        setJoinedClubs([]);
+        return;
+      }
+
       try {
-        responseText = await response.text();
         const data = JSON.parse(responseText);
-        
-        if (response.ok) {
-          if (Array.isArray(data)) {
-            setJoinedClubs(data);
-          } else {
-            console.error('Received invalid clubs data:', data);
-            setJoinedClubs([]);
-          }
+        if (Array.isArray(data)) {
+          setJoinedClubs(data);
         } else {
-          console.error('Failed to fetch joined clubs:', data.error, data.details || '');
+          console.error('Received invalid clubs data:', data);
           setJoinedClubs([]);
         }
       } catch (error) {
-        console.error('Failed to fetch joined clubs:', error.message || error, '\nResponse:', responseText);
+        console.error('Failed to parse joined clubs response:', error.message, '\nResponse:', responseText);
         setJoinedClubs([]);
       }
     } catch (error) {
