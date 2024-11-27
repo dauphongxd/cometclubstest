@@ -16,6 +16,8 @@ export default function ClientLayout({ children }) {
         if (response.ok) {
           const userData = await response.json();
           setUser(userData);
+        } else {
+          setUser(null);
         }
       } catch (error) {
         console.error('Auth check failed:', error);

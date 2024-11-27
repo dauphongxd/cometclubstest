@@ -13,8 +13,7 @@ export default function UserMenu({ user }) {
         method: 'POST',
       });
       if (response.ok) {
-        router.push('/auth');
-        router.refresh();
+        window.location.href = '/auth';  // Force a full page refresh
       }
     } catch (error) {
       console.error('Logout failed:', error);
