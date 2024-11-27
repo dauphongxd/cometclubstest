@@ -45,7 +45,14 @@ export default function DashboardPage() {
       const response = await fetch(`/api/clubs/joined?userId=${userId}`);
       if (response.ok) {
         const data = await response.json();
-        setJoinedClubs(data);
+        // Transform the data to include club details
+        const joinedClubsWithDetails = data.map(membership => ({
+          id: membership.clubId,
+          name: `Club ${membership.clubId}`, // This would come from your actual club data
+          description: "Club description", // This would come from your actual club data
+          category: "General" // This would come from your actual club data
+        }));
+        setJoinedClubs(joinedClubsWithDetails);
       }
     } catch (error) {
       console.error('Failed to fetch joined clubs:', error);
