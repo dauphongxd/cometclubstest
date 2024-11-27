@@ -35,14 +35,12 @@ export default function AuthPage() {
         body: JSON.stringify(formData),
       });
       
-      const data = await response.json();
+      const responseData = await response.json();
       
       if (!response.ok) {
-        throw new Error(data.error || 'Authentication failed');
+        throw new Error(responseData.error || 'Authentication failed');
       }
-
-      const data = await response.json();
-      localStorage.setItem('authToken', data.token);
+      localStorage.setItem('authToken', responseData.token);
       window.location.href = '/';
     } catch (error) {
       setError(error.message);
