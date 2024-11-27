@@ -53,21 +53,25 @@ export default function DashboardPage() {
       try {
         responseText = await response.text();
         const data = JSON.parse(responseText);
-      if (response.ok) {
-        const data = JSON.parse(responseText);
-        if (Array.isArray(data)) {
-          setJoinedClubs(data);
+        
+        if (response.ok) {
+          if (Array.isArray(data)) {
+            setJoinedClubs(data);
+          } else {
+            console.error('Received invalid clubs data:', data);
+            setJoinedClubs([]);
+          }
         } else {
-          console.error('Received invalid clubs data:', data);
+          console.error('Failed to fetch joined clubs:', data.error, data.details || '');
           setJoinedClubs([]);
         }
-      } else {
-        const errorData = JSON.parse(responseText);
-        console.error('Failed to fetch joined clubs:', errorData.error, errorData.details || '');
+      } catch (error) {
+        console.error('Failed to fetch joined clubs:', error.message || error, '\nResponse:', responseText);
         setJoinedClubs([]);
       }
     } catch (error) {
-      console.error('Failed to fetch joined clubs:', error.message || error, '\nResponse:', responseText);
+      console.error('Failed to fetch joined clubs:', error.message || error);
+      setJoinedClubs([]);
     }
   };
 
