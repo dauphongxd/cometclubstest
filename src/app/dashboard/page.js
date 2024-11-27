@@ -42,10 +42,10 @@ export default function DashboardPage() {
 
   const fetchJoinedClubs = async (userId) => {
     try {
-      const response = await fetch(`/api/clubs/joined?userId=${userId}`);
+      const response = await fetch(`${window.location.origin}/api/clubs/joined?userId=${userId}`);
       if (response.ok) {
         const clubs = await response.json();
-        setJoinedClubs(clubs);
+        setJoinedClubs(clubs.map(club => ({...club, isJoined: true})));
       }
     } catch (error) {
       console.error('Failed to fetch joined clubs:', error);

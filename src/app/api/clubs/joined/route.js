@@ -21,7 +21,7 @@ export async function GET(request) {
 
     const clubs = members.map(member => member.club);
 
-    return new Response(JSON.stringify(members), {
+    return new Response(JSON.stringify(clubs), {
       status: 200,
       headers: { 'Content-Type': 'application/json' },
     });
