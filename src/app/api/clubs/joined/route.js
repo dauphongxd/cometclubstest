@@ -24,24 +24,27 @@ export async function GET(request) {
       });
     }
 
+    // Get all club IDs this user is a member of
     const members = await prisma.member.findMany({
-      where: { userId },
-      include: {
-        club: true
-      }
+      where: { userId }
     });
 
-    // Return empty array if no memberships found
-    // Ensure we have valid data to return
     if (!members || !Array.isArray(members)) {
-      return new Response(JSON.stringify({ error: 'No membership data found' }), {
-        status: 404,
+      return new Response(JSON.stringify([]), {
+        status: 200,
         headers: { 'Content-Type': 'application/json' },
       });
     }
 
-    // Ensure we have valid clubs data to return
-    const clubs = members.map(member => member.club).filter(Boolean);
+    // Get all clubs for these memberships
+    const clubIds = members.map(member => member.clubId);
+    const clubs = await prisma.club.findMany({
+      where: {
+        id: {
+          in: clubIds
+        }
+      }
+    });
 
     return new Response(JSON.stringify(clubs), {
       status: 200,
