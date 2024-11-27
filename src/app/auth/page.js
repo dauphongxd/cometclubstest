@@ -41,7 +41,8 @@ export default function AuthPage() {
         throw new Error(responseData.error || 'Authentication failed');
       }
       localStorage.setItem('authToken', responseData.token);
-      window.location.href = '/';
+      const returnUrl = searchParams.get('returnUrl') || '/';
+      router.push(returnUrl);
     } catch (error) {
       setError(error.message);
     }

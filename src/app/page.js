@@ -18,10 +18,10 @@ export default function Home() {
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
           <Link
-            href="/auth"
+            href="/clubs"
             className="px-8 py-4 bg-gradient-to-r from-[var(--accent-1)] to-[var(--accent-2)] text-white rounded-lg hover:opacity-90 transition-all duration-300 text-lg font-medium shadow-lg hover:shadow-xl flex items-center gap-2"
           >
-            Get Started
+            Explore Clubs
             <svg 
               className="w-5 h-5" 
               fill="none" 
