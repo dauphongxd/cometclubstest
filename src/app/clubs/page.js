@@ -87,8 +87,7 @@ export default function ClubsPage() {
         name: 'Investment Club',
         description: 'Learn about financial markets and investment strategies',
         category: 'Business'
-      }
-        }];
+      }];
         setClubs(data);
       } catch (error) {
         console.error('Failed to fetch clubs:', error);
