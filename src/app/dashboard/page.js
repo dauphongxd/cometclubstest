@@ -43,10 +43,10 @@ export default function DashboardPage() {
   const fetchJoinedClubs = async (userId) => {
     try {
       const response = await fetch(`/api/clubs/joined?userId=${userId}`, {
+        method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          'Cache-Control': 'no-cache',
-          'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+          'Cache-Control': 'no-cache'
         }
       });
 

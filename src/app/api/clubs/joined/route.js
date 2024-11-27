@@ -32,11 +32,15 @@ export async function GET(request) {
             userId: userId
           }
         }
-      },
-      include: {
-        members: true
       }
     });
+
+    if (!clubs) {
+      return new Response(JSON.stringify([]), {
+        status: 200,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
 
     return new Response(JSON.stringify(clubs), {
       status: 200,

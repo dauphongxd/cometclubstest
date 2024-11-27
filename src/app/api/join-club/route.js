@@ -25,6 +25,23 @@ export async function POST(request) {
       });
     }
 
+    // Check if membership already exists
+    const existingMember = await prisma.member.findUnique({
+      where: {
+        userId_clubId: {
+          userId,
+          clubId,
+        },
+      },
+    });
+
+    if (existingMember) {
+      return new Response(JSON.stringify({ error: 'Already joined this club' }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+
     // Create member relationship
     const member = await prisma.member.create({
       data: {
