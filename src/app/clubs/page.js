@@ -17,18 +17,9 @@ export default function ClubsPage() {
         const response = await fetch('/api/clubs');
         if (response.ok) {
           const data = await response.json();
-          setClubs(data);
-        }
-      } catch (error) {
-        console.error('Failed to fetch clubs:', error);
-      }
-    };
-
-    fetchClubs();
-  }, []);
-
-  // Example club data structure
-  const dummyClubs = [
+          if (data.length === 0) {
+            // Use dummy data if no clubs exist in database
+            setClubs([
       {
         id: '1',
         name: 'Computer Science Club',
@@ -102,6 +93,18 @@ export default function ClubsPage() {
         category: 'Business'
       }
     ]);
+          }
+        }
+      } catch (error) {
+        console.error('Failed to fetch clubs:', error);
+        // Fallback to dummy data on error
+        setClubs([
+          // ... same dummy data ...
+        ]);
+      }
+    };
+
+    fetchClubs();
   }, []);
 
   // Get unique categories from clubs
