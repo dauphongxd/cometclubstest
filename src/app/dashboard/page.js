@@ -119,17 +119,30 @@ export default function DashboardPage() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {joinedClubs.length > 0 ? (
-            joinedClubs.map((club) => (
-              <ClubCard
-                key={club.id}
-                club={club}
-                isJoined={true}
-                currentUser={user}
-                onJoinClick={() => {
-                  fetchJoinedClubs(user.id);
-                }}
-              />
-            ))
+            <>
+              {joinedClubs.map((club) => (
+                <ClubCard
+                  key={club.id}
+                  club={club}
+                  isJoined={true}
+                  currentUser={user}
+                  onJoinClick={() => {
+                    fetchJoinedClubs(user.id);
+                  }}
+                />
+              ))}
+              <div className="col-span-1 md:col-span-2 lg:col-span-3 flex justify-center mt-8">
+                <button
+                  onClick={() => router.push('/clubs')}
+                  className="px-6 py-3 bg-gradient-to-r from-[var(--accent-1)] to-[var(--accent-2)] text-white rounded-lg hover:opacity-90 transition-all duration-300 flex items-center gap-2"
+                >
+                  Browse More Clubs
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  </svg>
+                </button>
+              </div>
+            </>
           ) : (
             <div className="col-span-3 text-center py-8 text-[var(--muted-text)]">
               <p className="text-lg mb-4">You haven't joined any clubs yet.</p>
