@@ -21,10 +21,18 @@ model User {
 
 model Member {
   id          String   @id @default(cuid())
+  userId      String
+  clubId      String
+  joinedAt    DateTime @default(now())
+  user        User     @relation(fields: [userId], references: [id])
+
+  @@unique([userId, clubId])
+}
+
+model Club {
+  id          String   @id @default(cuid())
   name        String
-  email       String
-  phoneNumber String?
-  studentId   String
-  clubName    String
+  description String
+  category    String
   createdAt   DateTime @default(now())
 }
