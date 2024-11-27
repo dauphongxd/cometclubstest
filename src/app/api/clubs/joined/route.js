@@ -12,6 +12,18 @@ export async function GET(request) {
       });
     }
 
+    // First check if the user exists
+    const user = await prisma.user.findUnique({
+      where: { id: userId }
+    });
+
+    if (!user) {
+      return new Response(JSON.stringify({ error: 'User not found' }), {
+        status: 404,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+
     const members = await prisma.member.findMany({
       where: { userId },
       include: {
@@ -19,7 +31,8 @@ export async function GET(request) {
       }
     });
 
-    const clubs = members.map(member => member.club);
+    // Return empty array if no memberships found
+    const clubs = members?.map(member => member.club) || [];
 
     return new Response(JSON.stringify(clubs), {
       status: 200,
