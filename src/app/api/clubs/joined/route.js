@@ -48,11 +48,12 @@ export async function GET(request) {
       headers: { 'Content-Type': 'application/json' },
     });
   } catch (error) {
-    console.error('Error in /api/clubs/joined:', error);
+    const errorMessage = error instanceof Error ? error.message : String(error);
     const errorResponse = {
       error: 'Failed to fetch joined clubs',
-      details: error.message || String(error)
+      details: errorMessage
     };
+    console.error('Error in /api/clubs/joined:', errorMessage);
     return new Response(JSON.stringify(errorResponse), {
       status: 500,
       headers: { 'Content-Type': 'application/json' },
