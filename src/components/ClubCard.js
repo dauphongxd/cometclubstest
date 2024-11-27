@@ -28,8 +28,10 @@ export default function ClubCard({ club, onJoinClick, isJoined, currentUser }) {
         throw new Error(data.error || 'Failed to join club');
       }
 
-      // Update UI to show joined status
-      window.location.reload();
+      // Call the onJoinClick callback to update parent state
+      if (onJoinClick) {
+        onJoinClick(club);
+      }
     } catch (error) {
       console.error('Failed to join club:', error);
       alert(error.message);

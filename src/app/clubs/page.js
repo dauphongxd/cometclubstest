@@ -104,13 +104,7 @@ export default function ClubsPage() {
         if (response.ok) {
           const userData = await response.json();
           setCurrentUser(userData);
-          
-          // Fetch joined clubs
-          const joinedResponse = await fetch(`/api/clubs/joined?userId=${userData.id}`);
-          if (joinedResponse.ok) {
-            const joinedData = await joinedResponse.json();
-            setJoinedClubs(new Set(joinedData.map(club => club.clubId)));
-          }
+          await fetchJoinedClubs(userData.id);
         }
       } catch (error) {
         console.error('Error fetching user data:', error);
@@ -119,6 +113,24 @@ export default function ClubsPage() {
     
     fetchUserData();
   }, []);
+
+  const fetchJoinedClubs = async (userId) => {
+    try {
+      const joinedResponse = await fetch(`/api/clubs/joined?userId=${userId}`);
+      if (joinedResponse.ok) {
+        const joinedData = await joinedResponse.json();
+        setJoinedClubs(new Set(joinedData.map(club => club.clubId)));
+      }
+    } catch (error) {
+      console.error('Error fetching joined clubs:', error);
+    }
+  };
+
+  const handleJoinClick = async (club) => {
+    if (currentUser) {
+      await fetchJoinedClubs(currentUser.id);
+    }
+  };
 
   const filteredClubs = clubs.filter(club => {
     const matchesSearch = 
@@ -202,7 +214,7 @@ export default function ClubsPage() {
             <ClubCard 
               key={club.id} 
               club={club} 
-              onJoinClick={() => handleJoinClick(club)}
+              onJoinClick={handleJoinClick}
               isJoined={joinedClubs.has(club.id)}
               currentUser={currentUser}
             />
