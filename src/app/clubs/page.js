@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import ClubCard from '@/components/ClubCard';
 import SchoolLogo from '@/components/SchoolLogo';
 
@@ -10,6 +11,7 @@ export default function ClubsPage() {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [currentUser, setCurrentUser] = useState(null);
   const [joinedClubs, setJoinedClubs] = useState(new Set());
+  const router = useRouter();
 
   useEffect(() => {
     const fetchClubs = async () => {
