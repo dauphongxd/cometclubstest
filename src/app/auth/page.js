@@ -40,9 +40,10 @@ export default function AuthPage() {
       if (!response.ok) {
         throw new Error(responseData.error || 'Authentication failed');
       }
-      localStorage.setItem('authToken', responseData.token);
-      const returnUrl = searchParams.get('returnUrl') || '/';
-      router.push('/dashboard');
+      if (responseData.token) {
+        localStorage.setItem('authToken', responseData.token);
+        window.location.href = '/dashboard';
+      }
     } catch (error) {
       setError(error.message);
     }

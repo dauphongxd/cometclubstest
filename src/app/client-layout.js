@@ -16,6 +16,7 @@ export default function ClientLayout({ children }) {
         const token = localStorage.getItem('authToken');
         if (!token) {
           setUser(null);
+          setLoading(false);
           return;
         }
         
