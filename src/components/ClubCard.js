@@ -33,7 +33,11 @@ export default function ClubCard({ club, onJoinClick, isJoined, currentUser }) {
       }
     } catch (error) {
       console.error('Failed to join club:', error);
-      alert(error.message || 'Failed to join club. Please try again.');
+      if (error.message === 'Already joined this club') {
+        alert('You have already joined this club.');
+      } else {
+        alert(error.message || 'Failed to join club. Please try again.');
+      }
     }
   };
 
