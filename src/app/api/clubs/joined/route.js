@@ -39,7 +39,11 @@ export async function GET(request) {
       headers: { 'Content-Type': 'application/json' },
     });
   } catch (error) {
-    return new Response(JSON.stringify({ error: 'Failed to fetch joined clubs' }), {
+    console.error('Error in /api/clubs/joined:', error);
+    return new Response(JSON.stringify({ 
+      error: 'Failed to fetch joined clubs',
+      details: error.message 
+    }), {
       status: 500,
       headers: { 'Content-Type': 'application/json' },
     });
