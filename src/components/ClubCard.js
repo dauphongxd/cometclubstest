@@ -34,7 +34,10 @@ export default function ClubCard({ club, onJoinClick, isJoined, currentUser }) {
       }
     } catch (error) {
       console.error('Failed to join club:', error);
-      alert(error.message);
+      const errorMessage = error.message === 'Failed to join club' ? 
+        await error.response.json().then(data => data.error) : 
+        error.message;
+      alert(errorMessage || 'Failed to join club. Please try again.');
     }
   };
 
