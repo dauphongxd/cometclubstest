@@ -84,13 +84,24 @@ export default function DashboardPage() {
         return;
       }
 
+      // Ensure we have an array of clubs with all required fields
       if (!Array.isArray(data)) {
         console.error('Expected array of clubs but received:', typeof data);
         setJoinedClubs([]);
         return;
       }
 
-      setJoinedClubs(data);
+      // Map the clubs data to ensure it has all required fields
+      const formattedClubs = data.map(club => ({
+        id: club.id,
+        name: club.name,
+        description: club.description,
+        category: club.category,
+        joinedAt: club.members?.[0]?.joinedAt
+      }));
+
+      console.log('Formatted joined clubs:', formattedClubs); // Debug log
+      setJoinedClubs(formattedClubs);
     } catch (error) {
       console.error('Failed to fetch joined clubs:', error.message || error);
       setJoinedClubs([]);
@@ -107,17 +118,29 @@ export default function DashboardPage() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {joinedClubs.map((club) => (
-            <ClubCard
-              key={club.id}
-              club={club}
-              isJoined={true}
-              currentUser={user}
-              onJoinClick={() => {
-                fetchJoinedClubs(user.id);
-              }}
-            />
-          ))}
+          {joinedClubs.length > 0 ? (
+            joinedClubs.map((club) => (
+              <ClubCard
+                key={club.id}
+                club={club}
+                isJoined={true}
+                currentUser={user}
+                onJoinClick={() => {
+                  fetchJoinedClubs(user.id);
+                }}
+              />
+            ))
+          ) : (
+            <div className="col-span-3 text-center py-8 text-[var(--muted-text)]">
+              <p className="text-lg mb-4">You haven't joined any clubs yet.</p>
+              <button
+                onClick={() => router.push('/clubs')}
+                className="px-4 py-2 bg-gradient-to-r from-[var(--accent-1)] to-[var(--accent-2)] text-white rounded-lg hover:opacity-90 transition-all duration-300"
+              >
+                Browse Clubs
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>

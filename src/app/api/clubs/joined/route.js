@@ -33,11 +33,7 @@ export async function GET(request) {
           }
         }
       },
-      select: {
-        id: true,
-        name: true,
-        description: true,
-        category: true,
+      include: {
         members: {
           where: {
             userId: userId
@@ -48,6 +44,15 @@ export async function GET(request) {
         }
       }
     });
+
+    // Transform the data to include all necessary fields
+    const formattedClubs = clubs.map(club => ({
+      id: club.id,
+      name: club.name,
+      description: club.description,
+      category: club.category,
+      members: club.members
+    }));
 
     // Log the clubs data for debugging
     console.log('Found clubs:', JSON.stringify(clubs, null, 2));
