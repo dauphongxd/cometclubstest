@@ -7,6 +7,26 @@ import ClubCard from '@/components/ClubCard';
 export default function DashboardPage() {
   const [user, setUser] = useState(null);
   const [joinedClubs, setJoinedClubs] = useState([]);
+  const [allClubs, setAllClubs] = useState([
+    {
+      id: '1',
+      name: 'Computer Science Club',
+      description: 'For students interested in programming and technology',
+      category: 'Technology'
+    },
+    {
+      id: '2',
+      name: 'Photography Club',
+      description: 'Capture moments and learn photography techniques',
+      category: 'Arts'
+    },
+    {
+      id: '3',
+      name: 'Debate Club',
+      description: 'Develop public speaking and argumentation skills',
+      category: 'Academic'
+    }
+  ]);
   const [view, setView] = useState('browse'); // 'browse' or 'joined'
   const router = useRouter();
 
@@ -102,7 +122,17 @@ export default function DashboardPage() {
 
         {view === 'browse' && (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {/* Your existing clubs list */}
+            {allClubs.map((club) => (
+              <ClubCard
+                key={club.id}
+                club={club}
+                isJoined={joinedClubs.some(jc => jc.clubId === club.id)}
+                currentUser={user}
+                onJoinClick={() => {
+                  fetchJoinedClubs(user.id);
+                }}
+              />
+            ))}
           </div>
         )}
       </div>
