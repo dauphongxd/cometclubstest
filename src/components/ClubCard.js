@@ -22,12 +22,17 @@ export default function ClubCard({ club, onJoinClick, isJoined, currentUser }) {
         })
       });
 
-      if (response.ok) {
-        // Refresh the page or update the UI
-        window.location.reload();
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to join club');
       }
+
+      // Update UI to show joined status
+      window.location.reload();
     } catch (error) {
       console.error('Failed to join club:', error);
+      alert(error.message);
     }
   };
 

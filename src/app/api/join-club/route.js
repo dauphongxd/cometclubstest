@@ -1,37 +1,57 @@
-import { PrismaClient } from '@prisma/client'
+import { PrismaClient } from '@prisma/client';
 
-const prisma = new PrismaClient()
+const prisma = new PrismaClient();
 
 export async function POST(request) {
   try {
-    const data = await request.json();
+    const { userId, clubId } = await request.json();
     
-    // Create new member in database
+    if (!userId || !clubId) {
+      return new Response(JSON.stringify({ error: 'User ID and Club ID are required' }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+
+    // Check if user exists
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+    });
+
+    if (!user) {
+      return new Response(JSON.stringify({ error: 'User not found' }), {
+        status: 404,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+
+    // Create member relationship
     const member = await prisma.member.create({
       data: {
-        name: data.name,
-        email: data.email,
-        phoneNumber: data.phoneNumber,
-        studentId: data.studentId,
-        clubName: data.clubName,
+        userId,
+        clubId,
       },
     });
-    
+
     return new Response(JSON.stringify({ 
       message: 'Successfully joined',
-      member: member 
+      member 
     }), {
       status: 200,
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: { 'Content-Type': 'application/json' },
     });
   } catch (error) {
-    return new Response(JSON.stringify({ error: 'Failed to process request' }), {
+    // Handle unique constraint violation
+    if (error.code === 'P2002') {
+      return new Response(JSON.stringify({ error: 'Already joined this club' }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+
+    return new Response(JSON.stringify({ error: 'Failed to join club' }), {
       status: 500,
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: { 'Content-Type': 'application/json' },
     });
   }
 }
