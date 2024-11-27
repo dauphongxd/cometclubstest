@@ -26,6 +26,7 @@ model Member {
   clubId      String
   joinedAt    DateTime @default(now())
   user        User     @relation(fields: [userId], references: [id])
+  club        Club     @relation(fields: [clubId], references: [id])
 
   @@unique([userId, clubId])
 }
