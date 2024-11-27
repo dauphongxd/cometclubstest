@@ -36,4 +36,5 @@ model Club {
   description String
   category    String
   createdAt   DateTime @default(now())
+  members     Member[]
 }
