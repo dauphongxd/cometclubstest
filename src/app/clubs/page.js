@@ -8,7 +8,6 @@ export default function ClubsPage() {
   const [clubs, setClubs] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
-  const [showJoinedOnly, setShowJoinedOnly] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
   const [joinedClubs, setJoinedClubs] = useState(new Set());
 
@@ -155,8 +154,7 @@ export default function ClubsPage() {
     const matchesCategory = 
       selectedCategory === 'All' || club.category === selectedCategory;
     
-    const matchesJoinedFilter = 
-      !showJoinedOnly || !joinedClubs.has(club.id);
+    const matchesJoinedFilter = !joinedClubs.has(club.id);
     
     return matchesSearch && matchesCategory && matchesJoinedFilter;
   });
@@ -192,16 +190,6 @@ export default function ClubsPage() {
           </div>
           
           <div className="flex flex-wrap gap-2 items-center">
-            <button
-              onClick={() => setShowJoinedOnly(!showJoinedOnly)}
-              className={`px-4 py-2 rounded-full text-sm transition-all duration-300 font-medium ${
-                showJoinedOnly
-                  ? 'bg-gradient-to-r from-[var(--accent-1)] to-[var(--accent-2)] text-white shadow-lg'
-                  : 'bg-[var(--card-background)] text-[var(--foreground)] hover:bg-[var(--hover-background)] backdrop-blur-sm border border-[var(--card-border)]'
-              }`}
-            >
-              Show Unjoined Only
-            </button>
             {categories.map(category => (
               <button
                 key={category}

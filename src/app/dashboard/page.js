@@ -7,27 +7,6 @@ import ClubCard from '@/components/ClubCard';
 export default function DashboardPage() {
   const [user, setUser] = useState(null);
   const [joinedClubs, setJoinedClubs] = useState([]);
-  const [allClubs, setAllClubs] = useState([
-    {
-      id: '1',
-      name: 'Computer Science Club',
-      description: 'For students interested in programming and technology',
-      category: 'Technology'
-    },
-    {
-      id: '2',
-      name: 'Photography Club',
-      description: 'Capture moments and learn photography techniques',
-      category: 'Arts'
-    },
-    {
-      id: '3',
-      name: 'Debate Club',
-      description: 'Develop public speaking and argumentation skills',
-      category: 'Academic'
-    }
-  ]);
-  const [view, setView] = useState('browse'); // 'browse' or 'joined'
   const router = useRouter();
 
   useEffect(() => {
@@ -80,61 +59,21 @@ export default function DashboardPage() {
           <h1 className="text-4xl font-bold bg-gradient-to-r from-[var(--accent-1)] to-[var(--accent-2)] bg-clip-text text-transparent">
             My Dashboard
           </h1>
-          <div className="flex gap-4">
-            <button
-              onClick={() => setView('browse')}
-              className={`px-4 py-2 rounded-lg transition-all duration-300 ${
-                view === 'browse'
-                  ? 'bg-gradient-to-r from-[var(--accent-1)] to-[var(--accent-2)] text-white'
-                  : 'bg-[var(--card-background)] border border-[var(--card-border)]'
-              }`}
-            >
-              Browse Clubs
-            </button>
-            <button
-              onClick={() => setView('joined')}
-              className={`px-4 py-2 rounded-lg transition-all duration-300 ${
-                view === 'joined'
-                  ? 'bg-gradient-to-r from-[var(--accent-1)] to-[var(--accent-2)] text-white'
-                  : 'bg-[var(--card-background)] border border-[var(--card-border)]'
-              }`}
-            >
-              Joined Clubs
-            </button>
-          </div>
         </div>
 
-        {view === 'joined' && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {joinedClubs.map((club) => (
-              <ClubCard
-                key={club.id}
-                club={club}
-                isJoined={true}
-                currentUser={user}
-                onJoinClick={() => {
-                  fetchJoinedClubs(user.id);
-                }}
-              />
-            ))}
-          </div>
-        )}
-
-        {view === 'browse' && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {allClubs.map((club) => (
-              <ClubCard
-                key={club.id}
-                club={club}
-                isJoined={joinedClubs.some(jc => jc.clubId === club.id)}
-                currentUser={user}
-                onJoinClick={() => {
-                  fetchJoinedClubs(user.id);
-                }}
-              />
-            ))}
-          </div>
-        )}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {joinedClubs.map((club) => (
+            <ClubCard
+              key={club.id}
+              club={club}
+              isJoined={true}
+              currentUser={user}
+              onJoinClick={() => {
+                fetchJoinedClubs(user.id);
+              }}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );
