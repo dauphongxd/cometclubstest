@@ -1,6 +1,12 @@
 import { prisma } from '@/lib/prisma';
 
 export async function GET(request, { params }) {
+  if (!params.clubId) {
+    return new Response(JSON.stringify({ error: 'Club ID is required' }), {
+      status: 400,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  }
   try {
     const messages = await prisma.message.findMany({
       where: {

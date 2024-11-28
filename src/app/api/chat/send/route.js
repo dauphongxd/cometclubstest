@@ -13,14 +13,26 @@ export async function POST(request) {
   try {
     const { content, clubId, userId } = await request.json();
 
+    if (!content || !clubId || !userId) {
+      return new Response(JSON.stringify({ error: 'Missing required fields' }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+
     // Get member record
     const member = await prisma.member.findFirst({
       where: {
-        userId,
-        clubId,
+        userId: userId,
+        clubId: clubId,
       },
       include: {
-        user: true,
+        user: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
       },
     });
 
