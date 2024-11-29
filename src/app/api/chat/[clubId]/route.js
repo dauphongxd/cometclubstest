@@ -11,7 +11,7 @@ export async function GET(request, { params }) {
   try {
     const messages = await prisma.message.findMany({
       where: {
-        clubId: params.clubId,
+        clubId: clubId,
       },
       include: {
         member: {

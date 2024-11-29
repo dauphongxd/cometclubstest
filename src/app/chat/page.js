@@ -117,10 +117,10 @@ export default function ChatPage() {
     if (!newMessage.trim() || !selectedClub || !user) return;
 
     try {
-      console.log('Sending message:', {
-        content: newMessage,
-        clubId: selectedClub.id,
-        userId: user.id,
+      console.log('Received message request:', {
+        content,
+        clubId,
+        userId,
       });
       const token = localStorage.getItem('authToken');
       const response = await fetch('/api/chat/send', {

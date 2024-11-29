@@ -72,7 +72,11 @@ export async function POST(request) {
       headers: { 'Content-Type': 'application/json' },
     });
   } catch (error) {
-    return new Response(JSON.stringify({ error: 'Failed to send message' }), {
+    console.error('Error sending message:', error);
+    return new Response(JSON.stringify({ 
+      error: 'Failed to send message',
+      details: error.message || String(error)
+    }), {
       status: 500,
       headers: { 'Content-Type': 'application/json' },
     });
