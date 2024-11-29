@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 export default function AdminPage() {
   const [user, setUser] = useState(null);
@@ -91,6 +92,29 @@ export default function AdminPage() {
       console.error('Failed to create announcement:', error);
     }
   };
+
+  if (!user) {
+    return (
+      <div className="min-h-screen flex items-center justify-center p-8">
+        <div className="max-w-md w-full space-y-8 bg-[var(--card-background)] p-8 rounded-xl shadow-lg border border-[var(--card-border)]">
+          <h1 className="text-3xl font-bold text-center bg-gradient-to-r from-[var(--accent-1)] to-[var(--accent-2)] bg-clip-text text-transparent">
+            Admin Access Required
+          </h1>
+          <p className="text-center text-[var(--muted-text)]">
+            Please sign in with admin credentials to access this page.
+          </p>
+          <div className="flex justify-center">
+            <Link
+              href="/auth?returnUrl=/admin"
+              className="px-6 py-3 bg-gradient-to-r from-[var(--accent-1)] to-[var(--accent-2)] text-white rounded-lg hover:opacity-90 transition-all duration-300"
+            >
+              Sign In
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen p-8">

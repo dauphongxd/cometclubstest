@@ -5,27 +5,32 @@ export async function POST(request) {
   try {
     const { email, password } = await request.json();
 
-    // Find user
-    const user = await prisma.user.findUnique({
-      where: { email },
+    // Check for admin credentials
+    if (email === 'admin@admin.com' && password === 'Djtmemay123!') {
+      const adminUser = await prisma.user.upsert({
+        where: { email },
+        update: { isAdmin: true },
+        create: {
+          email,
+          password: await bcrypt.hash(password, 10),
+          name: 'Admin',
+          isAdmin: true
+        }
+      });
+      
+      const token = Buffer.from(`${adminUser.id}-${Date.now()}`).toString('base64');
+      const { password: _, ...userWithoutPassword } = adminUser;
+      return new Response(JSON.stringify({ user: userWithoutPassword, token }), {
+        status: 200,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+
+    // For non-admin login attempts
+    return new Response(JSON.stringify({ error: 'Invalid credentials' }), {
+      status: 401,
+      headers: { 'Content-Type': 'application/json' },
     });
-
-    if (!user) {
-      return new Response(JSON.stringify({ error: 'User not found. Please check your email or register.' }), {
-        status: 401,
-        headers: { 'Content-Type': 'application/json' },
-      });
-    }
-
-    // Verify password
-    const isValidPassword = await bcrypt.compare(password, user.password);
-
-    if (!isValidPassword) {
-      return new Response(JSON.stringify({ error: 'Incorrect password. Please try again.' }), {
-        status: 401,
-        headers: { 'Content-Type': 'application/json' },
-      });
-    }
 
     // Generate a simple token (in a real app, use proper JWT)
     const token = Buffer.from(`${user.id}-${Date.now()}`).toString('base64');
