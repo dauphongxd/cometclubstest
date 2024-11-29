@@ -37,17 +37,6 @@ export async function POST(request) {
       status: 200,
       headers: { 'Content-Type': 'application/json' },
     });
-
-    // Generate a simple token (in a real app, use proper JWT)
-    const token = Buffer.from(`${user.id}-${Date.now()}`).toString('base64');
-
-    // Remove password from response
-    const { password: _, ...userWithoutPassword } = user;
-
-    return new Response(JSON.stringify({ user: userWithoutPassword, token }), {
-      status: 200,
-      headers: { 'Content-Type': 'application/json' },
-    });
   } catch (error) {
     return new Response(JSON.stringify({ error: 'Authentication failed' }), {
       status: 500,
