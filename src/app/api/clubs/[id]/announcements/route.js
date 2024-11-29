@@ -69,14 +69,6 @@ export async function POST(request, { params }) {
     });
   }
 }
-import { prisma } from '@/lib/prisma';
-
-export async function GET(request, { params }) {
-  const { id } = params;
-  try {
-    const announcements = await prisma.announcement.findMany({
-      where: {
-        clubId: id
       },
       orderBy: {
         createdAt: 'desc'
