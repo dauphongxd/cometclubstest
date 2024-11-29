@@ -190,13 +190,19 @@ export default function ChatPage() {
                         message.member.userId === user?.id ? 'justify-end' : 'justify-start'
                       }`}
                     >
-                      <div
-                        className={`max-w-[70%] p-3 rounded-lg ${
-                          message.member.userId === user?.id
-                            ? 'bg-gradient-to-r from-[var(--accent-1)] to-[var(--accent-2)] text-white'
-                            : 'bg-[var(--hover-background)]'
-                        }`}
-                      >
+                      <div className="flex items-start gap-2">
+                        <div 
+                          className="w-8 h-8 rounded-full bg-gradient-to-r from-[var(--accent-1)] to-[var(--accent-2)] flex items-center justify-center text-white flex-shrink-0"
+                        >
+                          {message.member.user.name.charAt(0).toUpperCase()}
+                        </div>
+                        <div
+                          className={`max-w-[70%] p-3 rounded-lg ${
+                            message.member.userId === user?.id
+                              ? 'bg-gradient-to-r from-[var(--accent-1)] to-[var(--accent-2)] text-white'
+                              : 'bg-[var(--hover-background)]'
+                          }`}
+                        >
                         <p className="text-sm font-medium mb-1">
                           {message.member.user.name}
                         </p>
@@ -204,6 +210,7 @@ export default function ChatPage() {
                         <p className="text-xs opacity-70 mt-1">
                           {new Date(message.createdAt).toLocaleTimeString()}
                         </p>
+                        </div>
                       </div>
                     </div>
                   ))}
