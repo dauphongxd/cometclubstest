@@ -105,7 +105,7 @@ export default function AdminPage() {
           </p>
           <div className="flex justify-center">
             <Link
-              href="/auth?returnUrl=/admin"
+              href="/authadmin?returnUrl=/admin"
               className="px-6 py-3 bg-gradient-to-r from-[var(--accent-1)] to-[var(--accent-2)] text-white rounded-lg hover:opacity-90 transition-all duration-300"
             >
               Sign In
