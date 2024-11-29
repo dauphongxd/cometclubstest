@@ -36,32 +36,29 @@ export default function ClubDetailsPage({ params }) {
   }, []);
 
   useEffect(() => {
-    const fetchClubDetails = async () => {
+    const fetchData = async () => {
       try {
-        const response = await fetch(`/api/clubs/${clubId}`);
-        if (response.ok) {
-          const data = await response.json();
-          setClub(data);
-        }
-      } catch (error) {
-        console.error('Failed to fetch club details:', error);
-      }
-    };
+        const [clubResponse, announcementsResponse] = await Promise.all([
+          fetch(`/api/clubs/${clubId}`),
+          fetch(`/api/clubs/${clubId}/announcements`)
+        ]);
 
-    const fetchAnnouncements = async () => {
-      try {
-        const response = await fetch(`/api/clubs/${clubId}/announcements`);
-        if (response.ok) {
-          const data = await response.json();
-          setAnnouncements(data);
+        if (clubResponse.ok) {
+          const clubData = await clubResponse.json();
+          setClub(clubData);
+        }
+
+        if (announcementsResponse.ok) {
+          const announcementsData = await announcementsResponse.json();
+          setAnnouncements(announcementsData);
         }
       } catch (error) {
-        console.error('Failed to fetch club details:', error);
+        console.error('Failed to fetch data:', error);
       }
     };
 
     if (clubId) {
-      fetchClubDetails();
+      fetchData();
     }
   }, [clubId]);
 
