@@ -15,6 +15,7 @@ model User {
   email     String   @unique
   password  String
   name      String
+  isAdmin   Boolean  @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   members   Member[]
@@ -39,7 +40,17 @@ model Club {
   category    String
   createdAt   DateTime  @default(now())
   members     Member[]
-  messages    Message[]
+  messages      Message[]
+  announcements Announcement[]
+}
+
+model Announcement {
+  id        String   @id @default(cuid())
+  title     String
+  content   String
+  clubId    String
+  club      Club     @relation(fields: [clubId], references: [id])
+  createdAt DateTime @default(now())
 }
 
 model Message {
