@@ -132,7 +132,7 @@ export default function ClubDetailsPage({ params }) {
               {announcements.map((announcement) => (
                 <div key={announcement.id} className="mb-4 last:mb-0 p-4 border border-[var(--card-border)] rounded-lg">
                   <h3 className="text-lg font-medium">{announcement.title}</h3>
-                  <p className="text-[var(--muted-text)] text-sm mt-2">{announcement.content}</p>
+                  <p className="text-[var(--muted-text)] text-sm mt-2 whitespace-pre-wrap">{announcement.content}</p>
                   <span className="text-xs text-[var(--muted-text)] mt-2 block">
                     {new Date(announcement.createdAt).toLocaleDateString()}
                   </span>

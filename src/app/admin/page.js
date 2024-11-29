@@ -157,7 +157,7 @@ export default function AdminPage() {
                 <textarea
                   value={newAnnouncement.content}
                   onChange={(e) => setNewAnnouncement(prev => ({ ...prev, content: e.target.value }))}
-                  className="w-full px-4 py-2 rounded-lg border border-[var(--card-border)] bg-[var(--card-background)] h-32"
+                  className="w-full px-4 py-2 rounded-lg border border-[var(--card-border)] bg-[var(--card-background)] h-48 whitespace-pre-wrap"
                   required
                 />
               </div>
@@ -185,7 +185,7 @@ export default function AdminPage() {
                       {new Date(announcement.createdAt).toLocaleDateString()}
                     </span>
                   </div>
-                  <p className="text-[var(--muted-text)] mb-2">{announcement.content}</p>
+                  <p className="text-[var(--muted-text)] mb-2 whitespace-pre-wrap">{announcement.content}</p>
                   <p className="text-sm font-medium">Club: {announcement.club.name}</p>
                 </div>
               ))}
