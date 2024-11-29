@@ -1,7 +1,7 @@
 import { prisma } from '@/lib/prisma';
 
 export async function GET(request, { params }) {
-  const { clubId } = await params;
+  const { clubId } = params;
   if (!clubId) {
     return new Response(JSON.stringify({ error: 'Club ID is required' }), {
       status: 400,
