@@ -21,21 +21,33 @@ model User {
 }
 
 model Member {
-  id          String   @id @default(cuid())
+  id          String    @id @default(cuid())
   userId      String
   clubId      String
-  joinedAt    DateTime @default(now())
-  user        User     @relation(fields: [userId], references: [id])
-  club        Club     @relation(fields: [clubId], references: [id])
+  joinedAt    DateTime  @default(now())
+  user        User      @relation(fields: [userId], references: [id])
+  club        Club      @relation(fields: [clubId], references: [id])
+  messages    Message[]
 
   @@unique([userId, clubId])
 }
 
 model Club {
-  id          String   @id @default(cuid())
+  id          String    @id @default(cuid())
   name        String
   description String
   category    String
-  createdAt   DateTime @default(now())
+  createdAt   DateTime  @default(now())
   members     Member[]
+  messages    Message[]
+}
+
+model Message {
+  id        String   @id @default(cuid())
+  content   String
+  memberId  String
+  clubId    String
+  createdAt DateTime @default(now())
+  member    Member   @relation(fields: [memberId], references: [id])
+  club      Club     @relation(fields: [clubId], references: [id])
 }
